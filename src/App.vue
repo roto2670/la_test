@@ -9,17 +9,22 @@ export default ({
 
 <template>
   <sidebar />
-
-  <router-view />
+  <div>
+    <router-view />
+  </div>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Hi+Melody&family=Jua&display=swap');
+/* 
+font-family: 'Hi Melody', cursive;
+font-family: 'Jua', sans-serif; 
+*/
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-family: 'Jua', sans-serif;
 }
 
 #nav {

@@ -10,12 +10,12 @@ window.CONSTANTS = {
         3: 1490,     //아브렐슈드
     }, 
     CHALLENGE_ABYSS_DUNGEON: { //pre - code : 3
-        960: 301
+        0: 960
     }, 
     CHALLENGE_GUARDIAN: { //pre - code : 4
-        460: 401
+        0: 460    //아르고스
     }, 
     ABYSS_RAID: { //pre - code : 5
-        1370: 501
+        0: 1370   //아르고스
     } 
 };

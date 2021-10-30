@@ -1,12 +1,12 @@
 <script>
 import SidebarLink from './sidebarlink'
-import { collapsed, toggleSidebar, sidebarWidth } from './state'
+import {toggleSidebar, sidebarWidth } from './state'
 
 export default {
   props: {},
   components: { SidebarLink },
   setup() {
-    return { collapsed, toggleSidebar, sidebarWidth }
+    return {toggleSidebar, sidebarWidth }
   }
 }
 </script>
@@ -23,18 +23,11 @@ export default {
     </h1>
 
     <SidebarLink to="/" icon="fas home">Home</SidebarLink>
-    <SidebarLink to="/members" icon="fas fa-columns">Members</SidebarLink>
-    <SidebarLink to="/calander" icon="fas fa-chart-bar">Raid Calander</SidebarLink>
-    <SidebarLink to="/test" icon="fas home">API TEST</SidebarLink>
+    <!-- <SidebarLink to="/members" icon="fas fa-columns">Members</SidebarLink> -->
+    <!-- <SidebarLink to="/calander" icon="fas fa-chart-bar">Raid Calander</SidebarLink> -->
+    <SidebarLink to="/test" icon="fas fa-chart-bar">주간 숙제</SidebarLink>
 
 
-    <span
-      class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
-    >
-      <i class="fas fa-angle-double-left" />
-    </span>
   </div>
 </template>
 
@@ -70,15 +63,6 @@ export default {
   font-size: 1.5em;
 }
 
-.collapse-icon {
-  position: absolute;
-  bottom: 0;
-  padding: 0.75em;
-
-  color: rgba(255, 255, 255, 0.7);
-
-  transition: 0.2s linear;
-}
 
 .rotate-180 {
   transform: rotate(180deg);
