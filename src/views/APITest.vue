@@ -12,8 +12,8 @@
       </div>
     </div>
 
-    <h2 v-if="lv > 1415"> 군단장 레이드 </h2>
-    <div v-if="lv > 1415" id='commander-area2' class='commander-area2'>
+    <h2 v-if="lv >= 1415"> 군단장 레이드 </h2>
+    <div v-if="lv >= 1415" id='commander-area2' class='commander-area2'>
       <div class="card-form">
         <div v-if="valtan" id='commander-box-valtan2' class="commander-box-valtan2">
           <div id='pic-form' class="pic-form">
@@ -80,8 +80,8 @@
 
     </div>
 
-    <h2 v-if="lv > 1370"> 어비스 레이드 </h2>
-    <div v-if="lv > 1370" id='abyss-raid-area' class='abyss-raid-area'>
+    <h2 v-if="lv >= 1370"> 어비스 레이드 </h2>
+    <div v-if="lv >= 1370" id='abyss-raid-area' class='abyss-raid-area'>
       <div class="card-form">
         <div v-if="argos" id='abyss-raid-box-argos' class="abyss-raid-box-argos">
           <div id='pic-form' class="pic-form">
@@ -99,8 +99,8 @@
       </div>
     </div>
 
-    <h2 v-if="lv > 960"> 어비스 던전 </h2>
-    <div v-if="lv > 960" id='chal-abyss-dun-area' class='chal-abyss-dun-area'>   <!-- 도비스 -->
+    <h2 v-if="lv >= 960"> 어비스 던전 </h2>
+    <div v-if="lv >= 960" id='chal-abyss-dun-area' class='chal-abyss-dun-area'>   <!-- 도비스 -->
       <div class="card-form">
         <div v-if="abyss_dun" id='chal-abyss-dungeon-box' class="chal-abyss-dungeon-box">
           <div id='pic-form' class="pic-form">
@@ -118,8 +118,8 @@
       </div>
     </div>
 
-    <h2 v-if="lv > 460"> 도전 가디언 </h2>
-    <div v-if="lv > 460" id='chal-gardian-area' class='chal-gardian-area'>   <!-- 도가토 -->
+    <h2 v-if="lv >= 460"> 도전 가디언 </h2>
+    <div v-if="lv >= 460" id='chal-gardian-area' class='chal-gardian-area'>   <!-- 도가토 -->
       <div class="card-form">
         <div v-if="chal_guar" id='chal-gardian-box' class='chal-gardian-box'> 
           <div id='pic-form' class="pic-form">
@@ -208,28 +208,28 @@ export default {
       for(var i in window.CONSTANTS.COMMANDER) {
         switch(i) {
           case "0":
-            if(lvdata > window.CONSTANTS.COMMANDER[i]) {
+            if(lvdata >= window.CONSTANTS.COMMANDER[i]) {
               this.valtan = true;
             } else {
               this.valtan = false;
             }
           break;
           case "1":
-            if(lvdata > window.CONSTANTS.COMMANDER[i]) {
+            if(lvdata >= window.CONSTANTS.COMMANDER[i]) {
               this.biac = true;
             } else {
               this.biac = false;
             }
           break;
           case "2":
-            if(lvdata > window.CONSTANTS.COMMANDER[i]) {
+            if(lvdata >= window.CONSTANTS.COMMANDER[i]) {
               this.kuku = true;
             } else {
               this.kuku = false;
             }
           break;
           case "3":
-            if(lvdata > window.CONSTANTS.COMMANDER[i]) {
+            if(lvdata >= window.CONSTANTS.COMMANDER[i]) {
               this.abrel = true;
             } else {
               this.abrel = false;
@@ -243,7 +243,7 @@ export default {
       for(var i in window.CONSTANTS.ABYSS_RAID) {
         switch(i) {
           case "0":
-            if(lvdata > window.CONSTANTS.ABYSS_RAID[i]) {
+            if(lvdata >= window.CONSTANTS.ABYSS_RAID[i]) {
               this.argos = true;
             } else {
               this.argos = false;
@@ -257,7 +257,7 @@ export default {
       for(var i in window.CONSTANTS.CHALLENGE_ABYSS_DUNGEON) {
         switch(i) {
           case "0":
-            if(lvdata > window.CONSTANTS.CHALLENGE_ABYSS_DUNGEON[i]) {
+            if(lvdata >= window.CONSTANTS.CHALLENGE_ABYSS_DUNGEON[i]) {
               this.abyss_dun = true;
             } else {
               this.abyss_dun = false;
@@ -271,7 +271,7 @@ export default {
       for(var i in window.CONSTANTS.CHALLENGE_GUARDIAN) {
         switch(i) {
           case "0":
-            if(lvdata > window.CONSTANTS.CHALLENGE_GUARDIAN[i]) {
+            if(lvdata >= window.CONSTANTS.CHALLENGE_GUARDIAN[i]) {
               this.chal_guar = true;
             } else {
               this.chal_guar = false;
