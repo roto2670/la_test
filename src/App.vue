@@ -41,4 +41,8 @@ font-family: 'Jua', sans-serif;
   color: #42b983;
 }
 
+#swal2-title {
+  font-family: 'Jua', sans-serif;
+}
+
 </style>
