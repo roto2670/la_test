@@ -24,6 +24,7 @@ font-family: 'Jua', sans-serif;
 #app {
   text-align: center;
   color: #2c3e50;
+  min-width: 1080px;
   font-family: 'Jua', sans-serif;
 }
 

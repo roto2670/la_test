@@ -12,6 +12,7 @@
       </div>
     </div>
 
+    <h2 v-if="lv > 1415"> 군단장 레이드 </h2>
     <div v-if="lv > 1415" id='commander-area2' class='commander-area2'>
       <div class="card-form">
         <div v-if="valtan" id='commander-box-valtan2' class="commander-box-valtan2">
@@ -79,6 +80,7 @@
 
     </div>
 
+    <h2 v-if="lv > 1370"> 어비스 레이드 </h2>
     <div v-if="lv > 1370" id='abyss-raid-area' class='abyss-raid-area'>
       <div class="card-form">
         <div v-if="argos" id='abyss-raid-box-argos' class="abyss-raid-box-argos">
@@ -97,6 +99,7 @@
       </div>
     </div>
 
+    <h2 v-if="lv > 960"> 어비스 던전 </h2>
     <div v-if="lv > 960" id='chal-abyss-dun-area' class='chal-abyss-dun-area'>   <!-- 도비스 -->
       <div class="card-form">
         <div v-if="abyss_dun" id='chal-abyss-dungeon-box' class="chal-abyss-dungeon-box">
@@ -115,6 +118,7 @@
       </div>
     </div>
 
+    <h2 v-if="lv > 460"> 도전 가디언 </h2>
     <div v-if="lv > 460" id='chal-gardian-area' class='chal-gardian-area'>   <!-- 도가토 -->
       <div class="card-form">
         <div v-if="chal_guar" id='chal-gardian-box' class='chal-gardian-box'> 
@@ -305,17 +309,21 @@ export default {
     margin-bottom: 0px;
   }
 
+  h2 {
+    text-align: left;
+    margin-bottom: 0px;
+  }
+
   .chal-gardian-area {
     padding: 10px;
     background-color: #1ba6e2;
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 1000000px;
+    width: 100%;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
-    margin-top: 10px;
     margin-bottom: 10px;
   }
 
@@ -325,11 +333,10 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 1000000px;
+    width: 100%;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
-    margin-top: 10px;
     margin-bottom: 10px;
   }
 
@@ -339,11 +346,10 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 1000000px;
+    width: 100%;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
-    margin-top: 10px;
     margin-bottom: 10px;
   }
 
@@ -439,10 +445,11 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 1000000px;
+    width: 100%;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
+    margin-bottom: 10px;
   }
 
   .search-area {
