@@ -1,12 +1,12 @@
 <template>
-  <div id='about' class="about">
-    <h1>This is an about page</h1>
+  <div id='members' class="members">
+    <h1>This is an members page</h1>
   </div>
 </template>
 
 
 <style>
-  #about {
+  #members {
     margin-left: 270px;
     padding: 30px;
   }

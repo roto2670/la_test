@@ -1,8 +1,15 @@
+<script>
+import sidebar from '@/components/sidebar/sidebar';
+
+export default ({
+  components: { sidebar }
+})
+</script>
+
+
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <sidebar />
+
   <router-view />
 </template>
 
@@ -16,6 +23,7 @@
 }
 
 #nav {
+  margin-left: 250px;
   padding: 30px;
 }
 
@@ -27,4 +35,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>
