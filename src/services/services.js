@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 
-export const getID = (data, successCallback, failCallback) => {
+export const getData = (data, successCallback, failCallback) => {
     axios({
-        url: `${ window.CONSTANTS.URL.MAIN_BACK }/tt/` + data,
+        url: `${ window.CONSTANTS.URL.MAIN_BACK }/chardata/` + data,
         method: 'GET',
     }).then(response => {
         if (response.data) {
@@ -18,3 +18,23 @@ export const getID = (data, successCallback, failCallback) => {
     });
 
 }
+
+export const setTaskData = (data, successCallback, failCallback) => {
+    axios({
+        url: `${ window.CONSTANTS.URL.MAIN_BACK }/taskdata`,
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        data:data
+    }).then(response => {
+        if (response.data) {
+            successCallback(response.data);
+        } else {
+            failCallback();
+        }
+    }).catch(error => {
+        failCallback(error);
+    })
+}
+

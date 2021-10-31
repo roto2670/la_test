@@ -23,8 +23,6 @@ export default {
     </h1>
 
     <SidebarLink to="/" icon="fas home">Home</SidebarLink>
-    <!-- <SidebarLink to="/members" icon="fas fa-columns">Members</SidebarLink> -->
-    <!-- <SidebarLink to="/calander" icon="fas fa-chart-bar">Raid Calander</SidebarLink> -->
     <SidebarLink to="/test" icon="fas fa-chart-bar">주간 숙제</SidebarLink>
 
 
