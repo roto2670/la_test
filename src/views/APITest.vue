@@ -1,9 +1,10 @@
 <template>
   <div id='weekly' class="weekly">
     <div class="header-box">
-      <div id='title-box' class="title-box">
+
+      <!--<div id='title-box' class="title-box">
         <h1>주간 숙제 스케줄표 테스트 Ver {{ version }}</h1>
-      </div>
+      </div> -->
       <div id='search-area' class="search-area">
         <input v-on:keyup.enter="clickOkButton" v-model="char_id" id="charID" type="text" class="char-id">
         <div class="ok-button" @click="clickOkButton">
@@ -268,9 +269,7 @@ export default {
             for (var i in resData.char_list) {
               let data = {};
               data.name = resData.char_list[i]
-              if (resData.char_list[i] !== this.char_id) {
-                this.arrayOfObjects.push(data)
-              }
+              this.arrayOfObjects.push(data)              
             }
           }
         }, (error) => {
