@@ -1,16 +1,22 @@
 <script>
-import sidebar from '@/components/sidebar/sidebar';
+// import sidebar from '@/components/sidebar/sidebar';
+// import mainHome from '@/views/Home.vue'
+import apiTest from '@/views/APITest.vue'
 
 export default ({
-  components: { sidebar }
+  components: { 
+      // sidebar,
+      // mainHome,
+      apiTest
+    }
 })
 </script>
 
 
 <template>
-  <sidebar />
-  <div>
-    <router-view />
+  <!-- <sidebar /> -->
+  <div class="main?">
+    <apiTest />
   </div>
 </template>
 
@@ -24,7 +30,7 @@ font-family: 'Jua', sans-serif;
 #app {
   text-align: center;
   color: #2c3e50;
-  min-width: 1080px;
+  min-width: max-content;
   font-family: 'Jua', sans-serif;
 }
 

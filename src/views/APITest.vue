@@ -2,13 +2,16 @@
   <div id='weekly' class="weekly">
     <div class="header-box">
       <div id='title-box' class="title-box">
-        <h1>주간 숙제 스케줄표 테스트</h1>
+        <h1>주간 숙제 스케줄표 테스트 Ver {{ version }}</h1>
       </div>
       <div id='search-area' class="search-area">
         <input v-on:keyup.enter="clickOkButton" v-model="char_id" id="charID" type="text" class="char-id">
         <div class="ok-button" @click="clickOkButton">
           OK
         </div>
+      </div>
+      <div>
+        <dropdown :placeholder="placeholder" :options="arrayOfObjects" :selected="object" v-on:updateOption="methodToRunOnSelect"></dropdown>
       </div>
     </div>
 
@@ -21,13 +24,13 @@
           <div id='label-form' class="label-form">
             <label for="checkbox"> 발탄 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!valtan">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked_valtan" :disabled="!valtan" @change="changeValue">
           </div>
         </div>
-        <div v-if="valtan" id='val-button' class="commander-box-button">
+        <!--<div v-if="valtan" id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
 
       <div class="card-form">
@@ -35,15 +38,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 비아키스 </label>
+            <label for="checkbox-biac"> 비아키스 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!biac">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-biac" v-model="checked_biac" :disabled="!biac" @change="changeValue">
           </div>
         </div>
-        <div v-if="biac" id='val-button' class="commander-box-button">
+        <!--<div v-if="biac" id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
 
       <div class="card-form">
@@ -51,15 +54,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 쿠크세이튼 </label>
+            <label for="checkbox-kuku"> 쿠크세이튼 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!kuku">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-kuku" v-model="checked_kuku" :disabled="!kuku" @change="changeValue">
           </div>
         </div>
-        <div v-if="kuku" id='val-button' class="commander-box-button">
+        <!--<div v-if="kuku" id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
       
       <div class="card-form">
@@ -67,15 +70,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 아브렐슈드 </label>
+            <label for="checkbox-abrel"> 아브렐슈드 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!abrel">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-abrel" v-model="checked_abrel" :disabled="!abrel" @change="changeValue">
           </div>
         </div>
-        <div v-if="abrel" id='val-button' class="commander-box-button">
+        <!--<div v-if="abrel" id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
 
     </div>
@@ -87,15 +90,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 아르고스 </label>
+            <label for="checkbox-argos"> 아르고스 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!argos">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-argos" v-model="checked_argos" :disabled="!argos" @change="changeValue">
           </div>
         </div>
-        <div v-if="argos"  id='val-button' class="commander-box-button">
+        <!-- <div v-if="argos"  id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -106,15 +109,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 어비스 던전 </label>
+            <label for="checkbox-abyss-dun"> 어비스 던전 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!abyss_dun">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-abyss-dun" v-model="checked_abyss_dun" :disabled="!abyss_dun" @change="changeValue">
           </div>        
         </div>
-        <div v-if="abyss_dun"  id='val-button' class="commander-box-button">
+        <!-- <div v-if="abyss_dun"  id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -125,15 +128,15 @@
           <div id='pic-form' class="pic-form">
           </div>
           <div id='label-form' class="label-form">
-            <label for="checkbox"> 도전 가디언 </label>
+            <label for="checkbox-chal-guar"> 도전 가디언 </label>
           </div>
-          <div id='label-form' class="label-form">
-            <input class="chk-box" type="checkbox" id="checkbox" v-model="checked" :disabled="!chal_guar">
+          <div id='chk-form' class="chk-form">
+            <input class="chk-box" type="checkbox" id="checkbox-chal-guar" v-model="checked_chal_guar" :disabled="!chal_guar" @change="changeValue">
           </div>           
         </div>
-        <div v-if="chal_guar"  id='val-button' class="commander-box-button">
+        <!-- <div v-if="chal_guar"  id='val-button' class="commander-box-button">
           체크하기
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -146,13 +149,18 @@
 <script>
 import * as services from '../services/services.js';
 import sweetalert from 'sweetalert2';
+import dropdown from './view-dropdowns/Dropdown.vue';
 
 
 // @ is an alias to /src
 export default {
   name: "weekly",
+  components: {
+    dropdown
+  },
   data() {
     return{
+      version: "1.1",
       char_id: "",
       valtan: false,
       biac: false,
@@ -161,10 +169,57 @@ export default {
       argos: false,
       chal_guar: false,
       abyss_dun: false,
-      lv: ""
+      checked_valtan: false,
+      checked_biac: false,
+      checked_kuku: false,
+      checked_abrel: false,
+      checked_argos: false,
+      checked_chal_guar: false,
+      checked_abyss_dun: false,
+      lv: "",
+      arrayOfObjects: [
+      ],
+      object: {},
+      placeholder: '캐릭터를 선택해 주세요'
     }
   },
   methods: {
+    mousedown(e) {
+      if (e.button === 0) {
+        console.log("1111111 : ", this.object)
+      }
+    },
+
+    changeValue() {
+      let task_data = {},
+          post_data = {"content": {}};
+
+      task_data["201"] = this.checked_valtan;
+      task_data["202"] = this.checked_biac;
+      task_data["203"] = this.checked_kuku;
+      task_data["204"] = this.checked_abrel;
+      task_data["301"] = this.checked_abyss_dun;
+      task_data["401"] = this.checked_chal_guar;
+      task_data["501"] = this.checked_argos;
+
+      post_data.content["char_name"] = this.char_id;
+      post_data.content["task"] = task_data;
+
+      services.setTaskData(post_data, (resData) => {
+        if(resData) {
+          console.log("success to set task data")
+        } else {
+          console.log("fail to set task data")
+        }
+      })
+
+    },
+
+    methodToRunOnSelect(payload) {
+      this.char_id = payload.name;
+      this.clickOkButton()
+    },
+    
     clearData() {
       this.valtan = false,
       this.biac = false,
@@ -173,37 +228,85 @@ export default {
       this.argos = false,
       this.chal_guar = false,
       this.abyss_dun = false,
-      this.lv = ""
+      this.lv = "",
+      this.checked_valtan = false,
+      this.checked_biac = false,
+      this.checked_kuku = false,
+      this.checked_abrel = false,
+      this.checked_argos = false,
+      this.checked_chal_guar = false,
+      this.checked_abyss_dun = false,
+      this.arrayOfObjects = [],
+      this.object = {}
     },
 
     clickOkButton() {
       this.clearData()
+      console.log("this.object = > ", this.object)
       if (!this.char_id) {
         sweetalert.fire({
           icon: 'error',
           title:  '캐릭터 이름을 입력해 주세요'
         });
       } else {
-      let _charID = this.char_id
-        services.getID(_charID, (resData) => {
+      let _charID = this.char_id.toLowerCase()
+        services.getData(_charID, (resData) => {
           if (resData == 'null'){
             sweetalert.fire({
               icon: 'error',
               title: '존재하지 않는 캐릭터 입니다.'
             });
           } else {
-            this._commanderLvFilter(resData);
-            this._abyssRaidFilter(resData);
-            this._abyssDunFilter(resData);
-            this._charGuardianFilter(resData);
-            this.lv = resData;
+            this.lv = resData.lv;
+            this._commanderLvFilter(this.lv);
+            this._abyssRaidFilter(this.lv);
+            this._abyssDunFilter(this.lv);
+            this._charGuardianFilter(this.lv);
+
+            this._taskFilterInit(resData.task_data);
+
+            for (var i in resData.char_list) {
+              let data = {};
+              data.name = resData.char_list[i]
+              if (resData.char_list[i] !== this.char_id) {
+                this.arrayOfObjects.push(data)
+              }
+            }
           }
         }, (error) => {
           console.log("fail to get Lv : ", error);
         })
       }
     },
-    
+
+    _taskFilterInit(task_data){
+      for (var i in task_data) {
+        switch (i){
+          case "201":
+            this.checked_valtan = task_data["201"]
+          break;
+          case "202":
+            this.checked_biac = task_data["202"]
+          break;
+          case "203":
+            this.checked_kuku = task_data["203"]
+          break;
+          case "204":
+            this.checked_abrel = task_data["204"]
+          break;
+          case "301":
+            this.checked_abyss_dun = task_data["301"]
+          break;
+          case "401":
+            this.checked_chal_guar = task_data["401"]
+          break;
+          case "501":
+            this.checked_argos = task_data["501"]
+          break;
+        }
+      }
+    },
+
     _commanderLvFilter(lvdata) {
       for(var i in window.CONSTANTS.COMMANDER) {
         switch(i) {
@@ -285,21 +388,16 @@ export default {
   },
   computed(){
   },
-  created() {
+  created() {    
   },
 };
 </script>
 
 <style>
   #weekly {
-    margin-left: 270px;
+    /* margin-left: 270px; */
     padding: 30px;
     padding-top: 10px;
-  }
-
-  #APITest2 {
-    margin-left: 270px;
-    padding: 30px;
   }
 
 
@@ -320,7 +418,7 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 100%;
+    width: max-content;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
@@ -333,7 +431,7 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 100%;
+    width: max-content;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
@@ -346,7 +444,7 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 100%;
+    width: max-content;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
@@ -354,7 +452,6 @@ export default {
   }
 
   .abyss-raid-box-argos {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -363,7 +460,6 @@ export default {
   }
 
   .chal-abyss-dungeon-box {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -372,7 +468,6 @@ export default {
   }
 
   .chal-gardian-box {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -389,7 +484,6 @@ export default {
   }
 
   .commander-box-valtan2 {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -398,7 +492,6 @@ export default {
   }
 
   .commander-box-biac2 {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -407,7 +500,6 @@ export default {
   }
 
   .commander-box-kuku2 {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -416,7 +508,6 @@ export default {
   }
 
   .commander-box-abrel2 {
-    float: left;
     width: 160px;
     height: 160px;
     border-radius: 5px;
@@ -445,7 +536,7 @@ export default {
     color: #ffffff;
     font-size: 20px;
     height: 200px;
-    width: 100%;
+    width: max-content;
     border-top-width: 30px;
     border-left-width: 30px;
     border-radius: 5px;
@@ -454,7 +545,7 @@ export default {
 
   .search-area {
     margin-top: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     padding: 10px;
     padding-top: 5px;
   }
@@ -466,6 +557,11 @@ export default {
   }
 
   .label-form {
+    width: 160px;
+    height: 30px;
+  }
+
+  .chk-form {
     width: 160px;
     height: 30px;
   }
