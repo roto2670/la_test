@@ -8,7 +8,12 @@
         </div> 
       </div>
     </div>
-    <apiTest />
+
+    <div id='content-view' class="content-view">
+      <members v-if="!check" @select-ok-button="confirmCheck" />
+      <apiTest v-if="check" />
+    </div>
+
   </div>
 </template>
 
@@ -16,16 +21,26 @@
 // import sidebar from '@/components/sidebar/sidebar';
 // import mainHome from '@/views/Home.vue'
 import apiTest from '@/views/APITest.vue'
+import members from '@/views/Members.vue'
+
 
 export default ({
   components: { 
       // sidebar,
       // mainHome,
-      apiTest
+      apiTest,
+      members
   },
   data() {
     return {
       version: "1.2",
+      check: false
+    }
+  },
+  methods: {
+    confirmCheck(value) {
+      console.log("emit check : ", value)
+      this.check = value
     }
   }
 })
@@ -60,6 +75,14 @@ font-family: 'Jua', sans-serif;
 }
 
 #swal2-title {
+  font-family: 'Jua', sans-serif;
+}
+
+#swal2-html-container {
+  font-family: 'Jua', sans-serif;
+}
+
+#swal2-button {
   font-family: 'Jua', sans-serif;
 }
 
