@@ -33,13 +33,12 @@ export default ({
   },
   data() {
     return {
-      version: "1.2",
+      version: "1.2.2",
       check: false
     }
   },
   methods: {
     confirmCheck(value) {
-      console.log("emit check : ", value)
       this.check = value
     }
   }

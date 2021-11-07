@@ -20,6 +20,16 @@ window.CONSTANTS = {
     },
     IV: "aaaaaaaaaabbbbbb",
     KEY: "aaaaaaaaaabbbbbb",
+    JOIN_RES: {
+        EXIST: "data exist",
+        FAIL: "join fail",
+        SUCCESS: "join success"
+    },
+    LOGIN_RES: {
+        LOGIN_OK: "login ok",
+        NO_ID: "no id",
+        NO_PW: "no pw",
+    }
 };
 
     

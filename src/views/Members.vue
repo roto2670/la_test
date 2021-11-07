@@ -8,13 +8,13 @@
         <input type="text" v-model="login_ID" class="login-input" placeholder="ID">
       </div>
       <div>
-        <input v-on:keyup.enter="clickOkButton" type="password" v-model="login_pw" class="login-input" placeholder="Password">
+        <input v-on:keyup.enter="clickLoginButton" type="password" v-model="login_pw" class="login-input" placeholder="Password">
       </div>
       
       <div class="blank"/>
 
       <div id='login-button-box' class="login-button-box">
-        <button class="login-button" @click="clickOkButton">로 그 인</button>
+        <button class="login-button" @click="clickLoginButton">로 그 인</button>
       </div>
       <div id='join-button-box' class="join-button-box">
         <button class="join-button" @click="clickJoinButton">가입하기</button>
@@ -61,10 +61,63 @@ export default {
     }
   },
   methods: {
-    clickOkButton() {
-      console.log("data : ", this.login_ID, this.login_pw);
-      this.$emit('select-ok-button', true);
+    cleanData() {
+      this.login_ID = "";
+      this.login_pw = "";
+      this.join_id = "";
+      this.join_pw = "";
+      this.join_pw_chk = "";
+      this.joinState = false;
     },
+
+    encryptData(_id,_pw) {
+      const id = _id,
+            password = _pw,
+            keyutf = CryptoJS.enc.Utf8.parse(window.CONSTANTS.KEY),
+            ivutf = CryptoJS.enc.Utf8.parse(window.CONSTANTS.IV);
+
+      let crypto_id = CryptoJS.AES.encrypt(id, keyutf, {iv: ivutf, mode: CryptoJS.mode.CBC}).toString(),
+          crypto_pw = CryptoJS.AES.encrypt(password, keyutf, {iv: ivutf, mode: CryptoJS.mode.CBC}).toString(),
+          postData = {"content": {}};
+
+      postData.content["id"] = crypto_id;
+      postData.content["pw"] = crypto_pw;
+
+      return postData
+    },
+
+    clickLoginButton() {
+
+      let postData = this.encryptData(this.login_ID, this.login_pw);
+
+      this.services.login(postData, (resData) => {
+        if(resData) {
+          if (resData == window.CONSTANTS.LOGIN_RES.NO_ID) {
+            this.sweetalert.fire({
+              icon: 'error',
+              title: '로그인 실패',
+              text: '등록되지 않은 아이디 입니다.'
+            })
+          } else if (resData == window.CONSTANTS.LOGIN_RES.NO_PW) {
+            this.sweetalert.fire({
+              icon: 'error',
+              title: '로그인 실패',
+              text: '비밀번호가 일치하지 않습니다.'
+            })                
+          } else if (resData == window.CONSTANTS.LOGIN_RES.LOGIN_OK) {
+            this.$emit('select-ok-button', true);
+            this.cleanData()
+          }
+        } else {
+          console.log("fail to set task data")
+        }
+      }, (error) => {
+        console.log("errr test", error)
+      });
+
+
+    },
+
     confirm() {
       this.sweetalert.fire({
         icon: 'error',
@@ -77,19 +130,15 @@ export default {
     },
 
     clickJoinCancelButton() {
-      this.joinState = false;
-      this.join_id = "";
-      this.join_pw = "";
-      this.join_pw_chk = "";
+      this.cleanData();
     },
 
     clickJoinOkButton(){
+      const clean = this.cleanData;
       let data = {}
       data.join_id = this.join_id;
       data.join_pw = this.join_pw;
       data.join_pw_chk = this.join_pw_chk;
-
-      console.log("data : ", data)
 
       if (!this.join_id && !this.join_pw) {
         this.sweetalert.fire({
@@ -118,65 +167,41 @@ export default {
         });
       } else {
 
-        const id = this.join_id,
-              password = this.join_pw,
-              password_chk = this.join_pw_chk,
-              keyutf = CryptoJS.enc.Utf8.parse(window.CONSTANTS.KEY),
-              ivutf = CryptoJS.enc.Utf8.parse(window.CONSTANTS.IV);
+        let postData = this.encryptData(this.join_id, this.join_pw);
         
-        if (!id || !password) {
-          this.sweetalert.showValidationMessage(`등록할 계정과 비밀번호를 입력해주세요`)
-        } else if (password != password_chk) {
-          this.sweetalert.showValidationMessage(`비밀번호가 일치하지 않습니다.`)
-        } else {
-        
-          let crypto_id = CryptoJS.AES.encrypt(id, keyutf, {iv: ivutf, mode: CryptoJS.mode.CBC}).toString(),
-              crypto_pw = CryptoJS.AES.encrypt(password, keyutf, {iv: ivutf, mode: CryptoJS.mode.CBC}).toString(),
-              postData = {"content": {}};
-
-          postData.content["id"] = crypto_id;
-          postData.content["pw"] = crypto_pw;
-
-          console.log("postData : ", postData)
-          
-          this.services.setJoinAccount(postData, (resData) => {
-            if(resData) {
-              console.log("success to set task data : ", resData)
-              if (resData == "data exist") {
-                this.sweetalert.fire({
-                  icon: 'error',
-                  title: '이미 등록된 계정입니다.'
-                })
-              } else if (resData == "join fail") {
-                this.sweetalert.fire({
-                  icon: 'error',
-                  title: '계정등록에 실패 했습니다. 관리자에게 문의 하세요.'
-                })                
-              } else if (resData == "join success") {
-                this.sweetalert.fire({
-                  icon: 'success',
-                  title: '등록 성공!',
-                  text: '로그인 후 사용할 수 있습니다.'
-                }).then((result) => {
-                  console.log("result  = > : ", result)
-                  if (result.isConfirmed) {
-                    this.joinState = false;
-                    this.join_id = "";
-                    this.join_pw = "";
-                    this.join_pw_chk = "";
-                  }
-                })
-              }
-            } else {
-              console.log("fail to set task data")
+        this.services.setJoinAccount(postData, (resData) => {
+          if(resData) {
+            if (resData == window.CONSTANTS.JOIN_RES.EXIST) {
+              this.sweetalert.fire({
+                icon: 'error',
+                title: '이미 등록된 계정입니다.'
+              })
+            } else if (resData == window.CONSTANTS.JOIN_RES.FAIL) {
+              this.sweetalert.fire({
+                icon: 'error',
+                title: '계정등록에 실패 했습니다. 관리자에게 문의 하세요.'
+              })                
+            } else if (resData == window.CONSTANTS.JOIN_RES.SUCCESS) {
+              this.sweetalert.fire({
+                icon: 'success',
+                title: '등록 성공!',
+                text: '로그인 후 사용할 수 있습니다.'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  clean()
+                }
+              })
             }
-          }, (error) => {
-            console.log("errr test", error)
-          });
+          } else {
+            console.log("fail to set task data")
+          }
+        }, (error) => {
+          console.log("errr test", error)
+        });
 
-        }
       }
     },
+
   }
 }
 </script>
@@ -321,9 +346,5 @@ export default {
     background-color: #ff3939;
     color: #000;
   }
-
-  .join-area-button-box {
-
-  }
-
+  
 </style>

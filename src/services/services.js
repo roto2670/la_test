@@ -57,3 +57,22 @@ export const setJoinAccount = (data, successCallback, failCallback) => {
     })
 }
 
+export const login = (data, successCallback, failCallback) => {
+    axios({
+        url: `${ window.CONSTANTS.URL.MAIN_BACK }/login`,
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        data:data
+    }).then(response => {
+        if (response.data) {
+            successCallback(response.data);
+        } else {
+            failCallback();
+        }
+    }).catch(error => {
+        failCallback(error);
+    })
+}
+
