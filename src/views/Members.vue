@@ -105,7 +105,10 @@ export default {
               text: '비밀번호가 일치하지 않습니다.'
             })                
           } else if (resData == window.CONSTANTS.LOGIN_RES.LOGIN_OK) {
-            this.$emit('select-ok-button', true);
+            let emit_data = {};
+            emit_data.login = true;
+            emit_data.login_ID = postData.content.id;
+            this.$emit('login-ok-button', emit_data);
             this.cleanData()
           }
         } else {

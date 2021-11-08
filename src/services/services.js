@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 
-export const getData = (data, successCallback, failCallback) => {
+export const getData = (loginID, charID, successCallback, failCallback) => {
     axios({
-        url: `${ window.CONSTANTS.URL.MAIN_BACK }/chardata/` + data,
+        url: `${ window.CONSTANTS.URL.MAIN_BACK }/chardata/` + loginID +'/'+ charID,
         method: 'GET',
     }).then(response => {
         if (response.data) {

@@ -18,7 +18,8 @@
     "sweetalert2": "^11.1.9",
     "vue": "^3.0.0",
     "vue-dropdowns": "^1.1.2",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

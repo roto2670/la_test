@@ -1,5 +1,5 @@
 <template>
-  <div id='weekly' class="weekly">
+  <div id='weekly' class="weekly"> <!-- v-on="{ mousedown : mousedown }"> -->
   
     <div class="header-box">
       <div id='search-area' class="search-area">
@@ -24,9 +24,9 @@
             <input class="chk-box" type="checkbox" id="checkbox" v-model="checked_valtan" :disabled="!valtan" @change="changeValue">
           </div>
         </div>
-        <!--<div v-if="valtan" id='val-button' class="commander-box-button">
+        <!-- <button v-if="valtan" id='val-button' class="commander-box-button">
           체크하기
-        </div> -->
+        </button> -->
       </div>
 
       <div class="card-form">
@@ -152,6 +152,11 @@ export default {
   components: {
     dropdown,
   },
+  props:{
+    currentID: {
+      type: String
+    }
+  },
   data() {
     return{
       version: "1.1",
@@ -178,12 +183,6 @@ export default {
     }
   },
   methods: {
-    mousedown(e) {
-      if (e.button === 0) {
-        console.log("1111111 : ", this.object)
-      }
-    },
-
     changeValue() {
       let task_data = {},
           post_data = {"content": {}};
@@ -196,6 +195,7 @@ export default {
       task_data["401"] = this.checked_chal_guar;
       task_data["501"] = this.checked_argos;
 
+      post_data.content.login_id = this.currentID
       post_data.content["char_name"] = this.char_id;
       post_data.content["task"] = task_data;
 
@@ -242,8 +242,9 @@ export default {
           title:  '캐릭터 이름을 입력해 주세요'
         });
       } else {
-      let _charID = this.char_id.toLowerCase()
-        this.services.getData(_charID, (resData) => {
+      let _charID = this.char_id.toLowerCase(),
+          _login_id = this.currentID
+        this.services.getData(_login_id, _charID, (resData) => {
           if (resData == 'null'){
             this.sweetalert.fire({
               icon: 'error',
@@ -508,17 +509,27 @@ export default {
 
   .commander-box-button {
     margin-right: 5px;
-    margin-top: 10px;
-    display: inline-block;
-    font-size: 25px;
+    margin-top: 8px;
+    width: 160px;
+    height: 30px;
+    font-family: 'Jua', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border-radius: 45px;
+    transition: all 0.3s ease 0s;
     cursor: pointer;
-    width: 155px;
-    height: 25px;
-    border: 2px solid #000000;
-    border-radius: 10px;
-    background-color: #38a169;
-    color: #2c3e50;
-    box-shadow: 2px 2px;
+    outline: none;
+    border: 1px solid rgb(220, 220, 220);
+    box-sizing: border-box;
+  }
+
+  .commander-box-button:hover{
+    background-color: #2EE59D;
+    color: #000
   }
 
   .commander-area2 {

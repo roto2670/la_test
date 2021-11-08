@@ -1,7 +1,7 @@
 window.CONSTANTS = {
     IS_DEV: true,
     URL: {
-        MAIN_BACK: 'http://127.0.0.1:4557',
+        MAIN_BACK: 'http://54.180.160.176:4557/',
     },
     COMMANDER: { //pre - code : 2
         0: 1415,     //발탄 = 201
