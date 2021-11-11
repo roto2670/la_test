@@ -1,21 +1,17 @@
 <template>
-  <div id='weekly' class="weekly">
+  <div id='weekly' class="weekly"> <!-- v-on="{ mousedown : mousedown }"> -->
+  
     <div class="header-box">
-      <div id='title-box' class="title-box">
-        <h1>주간 숙제 스케줄표 테스트 Ver {{ version }}</h1>
-      </div>
       <div id='search-area' class="search-area">
         <input v-on:keyup.enter="clickOkButton" v-model="char_id" id="charID" type="text" class="char-id">
-        <div class="ok-button" @click="clickOkButton">
-          OK
-        </div>
+        <button class="button" @click="clickOkButton">검색하기</button>
       </div>
       <div>
         <dropdown :placeholder="placeholder" :options="arrayOfObjects" :selected="object" v-on:updateOption="methodToRunOnSelect"></dropdown>
       </div>
     </div>
 
-    <h2 v-if="lv >= 1415"> 군단장 레이드 </h2>
+    <h2 v-if="lv >= 1415" class="local-h2"> 군단장 레이드 </h2>
     <div v-if="lv >= 1415" id='commander-area2' class='commander-area2'>
       <div class="card-form">
         <div v-if="valtan" id='commander-box-valtan2' class="commander-box-valtan2">
@@ -28,9 +24,9 @@
             <input class="chk-box" type="checkbox" id="checkbox" v-model="checked_valtan" :disabled="!valtan" @change="changeValue">
           </div>
         </div>
-        <!--<div v-if="valtan" id='val-button' class="commander-box-button">
+        <!-- <button v-if="valtan" id='val-button' class="commander-box-button">
           체크하기
-        </div> -->
+        </button> -->
       </div>
 
       <div class="card-form">
@@ -83,7 +79,7 @@
 
     </div>
 
-    <h2 v-if="lv >= 1370"> 어비스 레이드 </h2>
+    <h2 v-if="lv >= 1370" class="local-h2"> 어비스 레이드 </h2>
     <div v-if="lv >= 1370" id='abyss-raid-area' class='abyss-raid-area'>
       <div class="card-form">
         <div v-if="argos" id='abyss-raid-box-argos' class="abyss-raid-box-argos">
@@ -102,7 +98,7 @@
       </div>
     </div>
 
-    <h2 v-if="lv >= 960"> 어비스 던전 </h2>
+    <h2 v-if="lv >= 960" class="local-h2"> 어비스 던전 </h2>
     <div v-if="lv >= 960" id='chal-abyss-dun-area' class='chal-abyss-dun-area'>   <!-- 도비스 -->
       <div class="card-form">
         <div v-if="abyss_dun" id='chal-abyss-dungeon-box' class="chal-abyss-dungeon-box">
@@ -121,7 +117,7 @@
       </div>
     </div>
 
-    <h2 v-if="lv >= 460"> 도전 가디언 </h2>
+    <h2 v-if="lv >= 460" class="local-h2"> 도전 가디언 </h2>
     <div v-if="lv >= 460" id='chal-gardian-area' class='chal-gardian-area'>   <!-- 도가토 -->
       <div class="card-form">
         <div v-if="chal_guar" id='chal-gardian-box' class='chal-gardian-box'> 
@@ -147,8 +143,6 @@
 </template>
 
 <script>
-import * as services from '../services/services.js';
-import sweetalert from 'sweetalert2';
 import dropdown from './view-dropdowns/Dropdown.vue';
 
 
@@ -156,7 +150,12 @@ import dropdown from './view-dropdowns/Dropdown.vue';
 export default {
   name: "weekly",
   components: {
-    dropdown
+    dropdown,
+  },
+  props:{
+    currentID: {
+      type: String
+    }
   },
   data() {
     return{
@@ -184,12 +183,6 @@ export default {
     }
   },
   methods: {
-    mousedown(e) {
-      if (e.button === 0) {
-        console.log("1111111 : ", this.object)
-      }
-    },
-
     changeValue() {
       let task_data = {},
           post_data = {"content": {}};
@@ -202,10 +195,11 @@ export default {
       task_data["401"] = this.checked_chal_guar;
       task_data["501"] = this.checked_argos;
 
+      post_data.content.login_id = this.currentID
       post_data.content["char_name"] = this.char_id;
       post_data.content["task"] = task_data;
 
-      services.setTaskData(post_data, (resData) => {
+      this.services.setTaskData(post_data, (resData) => {
         if(resData) {
           console.log("success to set task data")
         } else {
@@ -242,17 +236,17 @@ export default {
 
     clickOkButton() {
       this.clearData()
-      console.log("this.object = > ", this.object)
       if (!this.char_id) {
-        sweetalert.fire({
+        this.sweetalert.fire({
           icon: 'error',
           title:  '캐릭터 이름을 입력해 주세요'
         });
       } else {
-      let _charID = this.char_id.toLowerCase()
-        services.getData(_charID, (resData) => {
+      let _charID = this.char_id.toLowerCase(),
+          _login_id = this.currentID
+        this.services.getData(_login_id, _charID, (resData) => {
           if (resData == 'null'){
-            sweetalert.fire({
+            this.sweetalert.fire({
               icon: 'error',
               title: '존재하지 않는 캐릭터 입니다.'
             });
@@ -268,9 +262,7 @@ export default {
             for (var i in resData.char_list) {
               let data = {};
               data.name = resData.char_list[i]
-              if (resData.char_list[i] !== this.char_id) {
-                this.arrayOfObjects.push(data)
-              }
+              this.arrayOfObjects.push(data)              
             }
           }
         }, (error) => {
@@ -407,7 +399,7 @@ export default {
     margin-bottom: 0px;
   }
 
-  h2 {
+  .local-h2 {
     text-align: left;
     margin-bottom: 0px;
   }
@@ -517,17 +509,27 @@ export default {
 
   .commander-box-button {
     margin-right: 5px;
-    margin-top: 10px;
-    display: inline-block;
-    font-size: 25px;
+    margin-top: 8px;
+    width: 160px;
+    height: 30px;
+    font-family: 'Jua', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border-radius: 45px;
+    transition: all 0.3s ease 0s;
     cursor: pointer;
-    width: 155px;
-    height: 25px;
-    border: 2px solid #000000;
-    border-radius: 10px;
-    background-color: #38a169;
-    color: #2c3e50;
-    box-shadow: 2px 2px;
+    outline: none;
+    border: 1px solid rgb(220, 220, 220);
+    box-sizing: border-box;
+  }
+
+  .commander-box-button:hover{
+    background-color: #2EE59D;
+    color: #000
   }
 
   .commander-area2 {
@@ -576,7 +578,7 @@ export default {
     height: 20px;
   }
 
-  .ok-button {
+  /* .ok-button {
     display: inline-block;
     margin: 5px;
     padding: 5px;
@@ -589,11 +591,37 @@ export default {
     background-color: #38a169;
     color: #e2dc1b;
     box-shadow: 2px 2px;
+  } */
+
+  .button {
+    margin: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 140px;
+    height: 35px;
+    font-family: 'Jua', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border-radius: 45px;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgb(220, 220, 220);
+    box-sizing: border-box;
+  }
+
+  .button:hover {
+    background-color: #2EE59D;
+    color: #000;
   }
 
   .char-id {
     width: 30%;
-    height: 2.4em;
+    height: 35px;
     font-size: 15px;
     border-radius: 5px;
     border: 1px solid rgb(220, 220, 220);

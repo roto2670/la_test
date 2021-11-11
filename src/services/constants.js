@@ -1,7 +1,7 @@
 window.CONSTANTS = {
     IS_DEV: true,
     URL: {
-        MAIN_BACK: 'http://54.180.160.176:4557', //'http://127.0.0.1:4557',
+        MAIN_BACK: 'http://54.180.160.176:4557',
     },
     COMMANDER: { //pre - code : 2
         0: 1415,     //발탄 = 201
@@ -18,6 +18,18 @@ window.CONSTANTS = {
     ABYSS_RAID: { //pre - code : 5
         0: 1370   //아르고스 = 501
     },
+    IV: "aaaaaaaaaabbbbbb",
+    KEY: "aaaaaaaaaabbbbbb",
+    JOIN_RES: {
+        EXIST: "data exist",
+        FAIL: "join fail",
+        SUCCESS: "join success"
+    },
+    LOGIN_RES: {
+        LOGIN_OK: "login ok",
+        NO_ID: "no id",
+        NO_PW: "no pw",
+    }
 };
 
     
